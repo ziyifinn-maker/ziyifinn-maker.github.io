@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>214不醒人室付寝室长</title>
+    <style>
+        /* --- 核心变量与日系动漫色彩系统 --- */
+        :root {
+            --bg-color: #0d0f12;          /* 深邃的新海诚式夜空底色 */
+            --card-bg: rgba(22, 26, 32, 0.85); /* 半透明带呼吸感的卡片背景 */
+            --accent-glow: #ff7b54;       /* 强对比黄昏暖橙光晕 */
+            --accent-cyan: #4deeea;       /* 动漫霓虹青色 */
+            --text-main: #f0f4f8;         /* 高亮文本 */
+            --text-muted: #9aa8b6;        /* 故事感暗色文本 */
+            --radius: 12px;
+        }
+
+        /* --- 基础样式与强颗粒感滤镜 --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 纯CSS实现的日系电影强烈噪点/颗粒感 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* 电影场景式的梦幻大光晕 */
+        body::after {
+            content: "";
+            position: fixed;
+            top: -10%; left: 50%;
+            transform: translateX(-50%);
+            width: 80vw; height: 50vh;
+            background: radial-gradient(circle, rgba(255,123,84,0.15) 0%, rgba(77,238,234,0.05) 50%, transparent 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* --- 响应式居中容器（排版呼吸感） --- */
+        .container {
+            width: 100%;
+            max-width: 680px; /* 紧凑聚合布局，极具文字质感 */
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 35px; /* 板块之间的呼吸间 heavy visual space */
+        }
+
+        /* --- 网页大标题 --- */
+        .main-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 123, 84, 0.6), 
+                         0 0 20px rgba(255, 123, 84, 0.3);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* --- 通用板块卡片 --- */
+        .section-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius);
+            padding: 25px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: border-color 0.3s ease;
+        }
+
+        .section-card:hover {
+            border-color: rgba(77, 238, 234, 0.3);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            color: var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 3px solid var(--accent-cyan);
+            padding-left: 10px;
+        }
+
+        /* --- 个人简介样式 --- */
+        .intro-text {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* --- 折叠箱（实验室报告）动态交互 --- */
+        .collapse-container {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .collapse-header {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: background 0.3s;
+            user-select: none;
+        }
+
+        .collapse-header:hover {
+            background: rgba(77, 238, 234, 0.08);
+            color: var(--accent-cyan);
+        }
+
+        .collapse-icon {
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        /* 丝滑滑开的核心：利用 max-height 过渡 */
+        .collapse-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .collapse-inner {
+            padding: 15px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* 当激活折叠时的状态 */
+        .collapse-container.active .collapse-content {
+            /* 设定一个足够大的高度供丝滑展开动画使用 */
+            max-height: 200px; 
+        }
+
+        .collapse-container.active .collapse-icon {
+            transform: rotate(90deg);
+            color: var(--accent-cyan);
+        }
+
+        /* --- 表格设计与微互动特效 --- */
+        .table-wrapper {
+            overflow-x: auto; /* 保证手机端不破裂布局 */
+        }
+
+        .achievement-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .achievement-table th, 
+        .achievement-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .achievement-table th {
+            color: var(--text-main);
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .achievement-table td {
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        /* 行悬停变色/微发光微互动 */
+        .achievement-table tbody tr {
+            transition: background-color 0.2s ease;
+        }
+
+        .achievement-table tbody tr:hover {
+            background-color: rgba(255, 123, 84, 0.06);
+        }
+
+        .achievement-table tbody tr:hover td {
+            color: #ffffff;
+            text-shadow: 0 0 5px rgba(255, 123, 84, 0.4);
+        }
+
+        /* --- 互动按钮与发光特效 --- */
+        .action-area {
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+
+        .interactive-btn {
+            background: transparent;
+            color: var(--accent-glow);
+            border: 2px solid var(--accent-glow);
+            padding: 12px 35px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 0 transparent;
+        }
+
+        /* 鼠标悬停时变色且高亮发光 */
+        .interactive-btn:hover {
+            background: var(--accent-glow);
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 123, 84, 0.6),
+                        0 0 30px rgba(255, 123, 84, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .interactive-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* --- 手机端特异性优化排版 --- */
+        @media (max-width: 480px) {
+            body {
+                padding: 25px 15px;
+            }
+            .main-title {
+                font-size: 1.75rem;
+            }
+            .section-card {
+                padding: 20px 15px;
+            }
+            .achievement-table th, 
+            .achievement-table td {
+                padding: 10px 8px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <h1 class="main-title">214不醒人室付寝室长</h1>
+
+        <section class="section-card">
+            <h2 class="section-title">个人简介</h2>
+            <p class="intro-text">
+                欢迎来到 214 不醒人室。在这里，作为承载全寝核心羁绊的付寝室长，白天肩负着带领全员对抗学业危机的重任，夜晚则化身为游戏战局中最坚实的后盾。在这段充满颗粒感的青春电影里，每一抹欢笑与热血，都有我为你亮起的那盏深夜明灯。
+            </p>
+        </section>
+
+        <section class="section-card">
+            <h2 class="section-title">我的实验室报告</h2>
+            <div class="collapse-container">
+                <div class="collapse-header" onclick="toggleCollapse(this)">
+                    <span>点击展开查看：关于“寝室夜间抗困”的实验观测</span>
+                    <span class="collapse-icon">▶</span>
+                </div>
+                <div class="collapse-content">
+                    <div class="collapse-inner">
+                        <strong>实验目的：</strong>研究214寝室在深夜联机状态下的精神存续极限。<br><br>
+                        <strong>实验现象：</strong>当付寝室长讲出第三个冷笑话时，全员困意明显下降80%，催化出了极强的寝室凝聚力。实验证明该方案长期有效。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <h2 class="section-title">核心成就体系</h2>
+            <div class="table-wrapper">
+                <table class="achievement-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 35%;">成就项目</th>
+                            <th style="width: 65%;">具体贡献与日常记录</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>带室友学习</strong></td>
+                            <td>考前重点突击指南编制，全员绝不挂科的幕后推手。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>陪室友打游戏</strong></td>
+                            <td>顺风不浪，逆风不投，永远在最关键的时刻准时上线。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>逗你们开心</strong></td>
+                            <td>金句频出，精准包揽全寝一整天的全部笑点。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="action-area">
+            <button class="interactive-btn" onclick="triggerEffect()">注入寝室灵魂</button>
+        </div>
+
+    </div>
+
+    <script>
+        // 丝滑折叠箱控制函数
+        function toggleCollapse(header) {
+            const container = header.parentElement;
+            const content = header.nextElementSibling;
+            
+            // 切换激活状态 class
+            container.classList.toggle('active');
+            
+            if (container.classList.contains('active')) {
+                // 如果展开，将 scrollHeight（其实际内容高度）动态赋予 max-height
+                content.style.maxHeight = content.scrollHeight + "px";
+            } else {
+                // 如果收起，恢复为 0
+                content.style.maxHeight = "0px";
+            }
+        }
+
+        // 按钮点击后的动效反馈
+        function triggerEffect() {
+            alert("✨ 付寝室长的羁绊BUFF已成功注入！214寝室全员战斗力、快乐值瞬间拉满！");
+        }
+    </script>
+</body>
+</html>
