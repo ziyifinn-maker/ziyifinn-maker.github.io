@@ -1,33 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>我的数字花园</title>
     <style>
-    body {
-        background-color: #0d1117; /* 把网页背景变成极客暗夜黑 */
-        color: #58a6ff;            /* 把文字变成极具科技感的荧光蓝 */
-        font-family: "Microsoft YaHei", sans-serif; /* 换成更优雅的微软雅黑字体 */
-        display: flex;
-        justify-content: center;   /* 让内容水平居中 */
-        align-items: center;       /* 让内容垂直居中 */
-        height: 100vh;             /* 让网页铺满整个屏幕 */
-        margin: 0;
-    }
-    h1 {
-        border: 2px solid #58a6ff; /* 给大标题加一个酷炫的荧光蓝边框 */
-        padding: 20px 40px;        /* 让边框和文字之间留出呼吸空间 */
-        border-radius: 8px;        /* 让边框的四角变得圆润 */
-        box-shadow: 0 0 20px rgba(88, 166, 255, 0.3); /* 给边框加上一层淡淡的黑客帝国科幻荧光效果 */
-    }
-</style>
+        body {
+            background-color: #0d1117; /* 极客暗夜黑 */
+            color: #c9d1d9;            /* 优雅的浅灰文字 */
+            font-family: "Microsoft YaHei", sans-serif;
+            padding: 40px 20px;
+            max-width: 800px;          /* 让网页内容在中间聚集，方便阅读 */
+            margin: 0 auto;            /* 居中显示 */
+            line-height: 1.6;
+        }
+        h1 {
+            color: #58a6ff;            /* 科技荧光蓝 */
+            border-bottom: 2px solid #30363d;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        .motto {
+            background-color: #161b22;
+            border-left: 4px solid #58a6ff;
+            padding: 15px;
+            font-style: italic;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+        li::before {
+            content: "🪐";
+            position: absolute;
+            left: 0;
+        }
+        /* 表格高级炫酷装修 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #161b22;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(88, 166, 255, 0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #30363d;
+        }
+        th {
+            background-color: #21262d;
+            color: #58a6ff;
+        }
+        tr:hover {
+            background-color: #1f242c; /* 鼠标悬停变色互动 */
+        }
+    </style>
 </head>
 <body>
-    
-<h1>这是我亲手手写的第一个 HTML 网页！</h1>
 
+    <h1>🚀 欢迎来到我的数字花园</h1>
+    <p style="text-align: center; color: #8b949e;">这是我用 HTML + CSS + GitHub 亲手搭建的第一个独立网页。</p>
 
+    <div class="motto">
+        “人无法描述见识之外的事情，但我们可以不断推开新的大门。”
+    </div>
+
+    <h2>🎨 关于我</h2>
+    <ul>
+        <li><strong>身份：</strong> 科技浪潮的观察者 / 新技能解锁大师</li>
+        <li><strong>核心理念：</strong> 用简单的工具，创造高互动性的成就感。</li>
+        <li><strong>今日目标：</strong> 彻底搞懂网页底层逻辑</li>
+    </ul>
+
+    <h2>📊 我的技能装备库</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>技能名称</th>
+                <th>熟练度</th>
+                <th>核心玩法</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>HTML 骨架搭建</strong></td>
+                <td>⚡ 震撼解锁</td>
+                <td>掌控网页元素，自由指挥 AI 代码落地</td>
+            </tr>
+            <tr>
+                <td><strong>CSS 空间装修</strong></td>
+                <td>🎨 运用自如</td>
+                <td>一键调出高对比度暗夜霓虹极客风</td>
+            </tr>
+            <tr>
+                <td><strong>GitHub 全球部署</strong></td>
+                <td>🚀 驾轻就熟</td>
+                <td>让全世界通过专属网址访问你的作品</td>
+            </tr>
+        </tbody>
+    </table>
 
 </body>
 </html>
