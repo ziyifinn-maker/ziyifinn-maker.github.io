@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>⚡ 赛博朋克数据空间</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #0a0a12;
+            color: #00ffcc;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .core-box {
+            border: 2px solid #00ffcc;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+            text-align: center;
+            background: rgba(10, 10, 18, 0.8);
+            margin-bottom: 20px;
+        }
+
+        /* 2. 给图表单独规划一块地方，必须指定宽度和高度，不然图表没地方画 */
+        #myChart {
+            width: 600px;
+            height: 350px;
+            border: 1px dashed rgba(0, 255, 204, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="core-box">
+        <h1>🌌 个人数据中枢</h1>
+        <p>这是一个完全由你掌控的本地网页实体。</p>
+    </div>
+
+    <div id="myChart"></div>
+
+    <script>
+        // 3. 告诉系统：我要在 myChart 这个盒子里开始画图了
+        const chartDom = document.getElementById('myChart');
+        const myChart = echarts.init(chartDom, 'right'); // 'dark' 表示开启暗黑科技风皮肤
+
+        // 4. 这就是你刚才在官网上修好的那段 option 配置数据！
+        const option = {
+            backgroundColor: 'transparent', // 背景透明，融合我们的网页背景
+            title: { text: '🌌 心流与精力多维动态观测', textStyle: { color: '#00ffcc' } },
+            tooltip: { trigger: 'axis' },
+            color: ['#00ffcc', '#ff007f'],
+            xAxis: {
+                type: 'category',
+                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+            },
+            yAxis: { type: 'value' },
+            series: [
+                {
+                    name: '心流专注度',
+                    data: [820, 932, 901, 1290, 1330, 1320, 1100],
+                    type: 'line',
+                    smooth: true,
+                    areaStyle: { opacity: 0.2 }
+                },
+                {
+                    name: '无聊指数',
+                    data: [300, 200, 400, 100, 50, 600, 150],
+                    type: 'bar',
+                    showBackground: true,
+                    backgroundStyle: { color: 'rgba(180, 180, 180, 0.1)' }
+                }
+            ]
+        };
+
+        // 5. 啪的一下，把数据塞给画笔，图表就活了！
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
